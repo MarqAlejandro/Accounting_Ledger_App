@@ -28,6 +28,14 @@ public class Transaction {
             this.amount = amount;
         }
 
+        public Transaction(String description){                         //3rd constructor
+            this.recordedDate = LocalDate.now();
+            this.recordedTime = LocalTime.now();
+            this.description = description;
+            this.vendor = "user";
+            this.amount = 0.0;
+        }
+
         public LocalDate getRecordedDate() {                                //list of getters and setters for each private variable
             return recordedDate;
         }

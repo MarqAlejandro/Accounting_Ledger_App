@@ -5,5 +5,9 @@ public class Main {
 
         System.out.println("Hello, User!");
 
+        AccountLedger application = new AccountLedger();
+
+        application.homeScreen();
+
     }
 }

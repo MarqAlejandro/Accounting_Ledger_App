@@ -1,8 +1,13 @@
 package com.plurasight;
 
+import java.time.*;
+import java.util.Scanner;
+
+
 public class AccountLedger {
     /*
                       Home Screen
+
 § D) Add Deposit - prompt user for the deposit information and
 save it to the csv file
 
@@ -12,6 +17,72 @@ information and save it to the csv file
 § L) Ledger - display the ledger screen
 
 § X) Exit - exit the application
+
+     */
+    private Scanner scanner = new Scanner(System.in);
+
+    public void homeScreen(){
+
+        System.out.println("D) Add Deposit" +
+                "\nP) Make Payment (Debit)" +
+                "\nL) Ledger" +
+                "\nX) Exit");
+        
+        int userInputConverted = 0;
+        String userInput = scanner.nextLine();
+        if(userInput.equalsIgnoreCase("d")){
+            userInputConverted = 1;
+        }
+        else if (userInput.equalsIgnoreCase("p")){
+            userInputConverted = 2;
+        }
+        else if (userInput.equalsIgnoreCase("l")){
+            userInputConverted = 3;
+        } else if (userInput.equalsIgnoreCase("x")) {
+            userInputConverted = 4;
+        }
+        else{
+            System.out.println("user input was not one of the options");
+        }
+        
+        switch (userInputConverted){
+            case 1:
+                System.out.println("working on addDeposit method");
+                break;
+            case 2:
+                System.out.println("working on makePayment method");
+                break;
+            case 3:
+                System.out.println("working on ledger method");
+                break;
+            case 4:
+                System.out.println("Exiting the application, please come again");
+                break;
+            default:
+                System.out.println("Please try again");
+                homeScreen();
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     /*
 
 in-depth detail on Ledger menu
  Ledger - All entries should show the newest entries first
