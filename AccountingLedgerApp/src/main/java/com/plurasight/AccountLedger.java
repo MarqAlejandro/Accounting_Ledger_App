@@ -13,14 +13,12 @@ import java.util.regex.Pattern;
 
 public class AccountLedger {
     /*
-
 § D) Add Deposit - prompt user for the deposit information and
 save it to the csv file
 
 § P) Make Payment (Debit) - prompt user for the debit
 information and save it to the csv file
 
-§ L) Ledger - display the ledger screen
      */
     private Scanner scanner = new Scanner(System.in);
     private List<Transaction> transactionList = new ArrayList<>();
@@ -102,20 +100,6 @@ information and save it to the csv file
         }
     }
 
-         /*
-
-in-depth detail on Ledger menu
- Ledger - All entries should show the newest entries first
-
-o A) All - Display all entries
-o D) Deposits - Display only the entries that are deposits into the
-account
-o P) Payments - Display only the negative entries (or payments)
-o R) Reports - A new screen that allows the user to run pre-defined
-reports or to run a custom search
-
-          */
-
     public void ledger() {
         System.out.println("\nLedger Display Screen, please input one of the following: " +
                 "\n\tA) All entries" +
@@ -159,7 +143,7 @@ reports or to run a custom search
     }
 
     public void displayAll() {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
         System.out.println("Printing All Account Transaction Information:");
         System.out.println();
@@ -172,7 +156,7 @@ reports or to run a custom search
     }
 
     public void displayDepositOnly(){
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
         System.out.println("Printing All Deposits Information:");
         System.out.println();
@@ -187,7 +171,7 @@ reports or to run a custom search
     }
 
     public void displayPaymentsOnly(){
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
         System.out.println("Printing All Payments Information:");
         System.out.println();
@@ -195,7 +179,7 @@ reports or to run a custom search
             if(transaction.getAmount() < 0) {
                 String formatDate = transaction.getRecordedDate().format(dateFormatter);
                 String formatTime = transaction.getRecordedTime().format(timeFormatter);
-                System.out.printf("Date and Time: %s : %s |\t Descripton: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                System.out.printf("Date and Time: %s : %s |\t Description: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
             }
         }
         ledger();
@@ -231,6 +215,7 @@ o H) Home - go back to the home page
                     ledger();
                 case 1:
                     System.out.println("working on displayMonthToDate method");
+                    displayMonthToDate();
                     break;
                 case 2:
                     System.out.println("working on displayPreviousMonth method");
@@ -253,6 +238,31 @@ o H) Home - go back to the home page
             reports();
         }
     }
+
+    public void displayMonthToDate(){
+        LocalDate toThisDate = LocalDate.now();
+        LocalDate thisMonth = LocalDate.now().withDayOfMonth(1);
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+        String formatToThisDate = toThisDate.format(dateFormatter);
+        String formatThisMonth = thisMonth.format(dateFormatter);
+
+        System.out.println("Printing All Payments Information...");
+        System.out.println("From " + formatThisMonth + " to " + formatToThisDate);
+        System.out.println();
+        for (Transaction transaction : transactionList) {                                                           //for-each loop to iterate through
+            if((transaction.getRecordedDate().isAfter(thisMonth) && (transaction.getRecordedDate().isBefore(toThisDate))  ) ){
+
+                String formatDate = transaction.getRecordedDate().format(dateFormatter);
+                String formatTime = transaction.getRecordedTime().format(timeFormatter);
+                System.out.printf("Date and Time: %s : %s |\t Description: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+
+            }
+        }
+
+
+    }
+
 
 
 
