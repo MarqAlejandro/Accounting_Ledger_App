@@ -2,6 +2,7 @@ package com.plurasight;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 public class Transaction {
 
@@ -10,19 +11,23 @@ public class Transaction {
         private String description;
         private String vendor;
         private Double amount;
+        private LocalDateTime recordedDateTime;
 
         public Transaction(){                                                   //empty constructor
             this.recordedDate = LocalDate.now();
             this.recordedTime = LocalTime.now();
+            this.recordedDateTime = LocalDateTime.now();
             this.description = "default";
             this.vendor = "user";
             this.amount = 0.0;
+
         }
 
         //constructor with parameters
-        public Transaction(LocalDate recordedDate, LocalTime recordedTime, String description, String vendor, Double amount) {
+        public Transaction(LocalDate recordedDate, LocalTime recordedTime, LocalDateTime recordedDateTime, String description, String vendor, Double amount) {
             this.recordedDate = recordedDate;
             this.recordedTime = recordedTime;
+            this.recordedDateTime = recordedDateTime;
             this.description = description;
             this.vendor = vendor;
             this.amount = amount;
@@ -31,12 +36,27 @@ public class Transaction {
         public Transaction(String description, String user, double amount){                         //3rd constructor
             this.recordedDate = LocalDate.now();
             this.recordedTime = LocalTime.now();
+            this.recordedDateTime = LocalDateTime.now();
             this.description = description;
             this.vendor = user;
             this.amount = amount;
         }
 
-        public LocalDate getRecordedDate() {                                //list of getters and setters for each private variable
+    public LocalDateTime getRecordedDateTime() {
+        return recordedDateTime;
+    }
+
+    public void setRecordedDateTime(LocalDateTime recordedDateTime) {
+        this.recordedDateTime = recordedDateTime;
+    }
+
+    public void setRecordedDateTime(LocalDate recordedDate, LocalTime recordedTime){
+            String dateTimeString =  recordedDate.toString() + "T" + recordedTime;
+            this.recordedDateTime = LocalDateTime.parse(dateTimeString);
+
+    }
+
+    public LocalDate getRecordedDate() {                                //list of getters and setters for each private variable
             return recordedDate;
         }
 

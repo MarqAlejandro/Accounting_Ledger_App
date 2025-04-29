@@ -25,7 +25,9 @@ information and save it to the csv file
 
 
     public void homeScreen() {
+        transactionList.clear();
         loadTransactionInfo();
+        sortNewest();
 
         System.out.println("\nWelcome, please input one of the following: " +
                 "\n\tD) Add Deposit" +
@@ -62,7 +64,7 @@ information and save it to the csv file
                 exit();
                 break;
             default:
-                System.out.println("Please try again - home screen");
+                System.out.println("Please try again");
                 homeScreen();
         }
     }//end of homeScreen method
@@ -86,6 +88,7 @@ information and save it to the csv file
                     transaction.setDescription(tokens[2]);
                     transaction.setVendor(tokens[3]);
                     transaction.setAmount(Double.parseDouble(tokens[4]));//will load and set all transaction information only if there is exactly 5 elements in the String Array
+                    transaction.setRecordedDateTime(transaction.getRecordedDate(), transaction.getRecordedTime());
                 } else {
                     System.out.println("error: missing or too much information on a given transaction");
                 }
@@ -98,6 +101,10 @@ information and save it to the csv file
             System.out.println("error with .csv file naming, please check if its the correct save file");                              //catch to loop back to beginning
 
         }
+    }
+
+    public void sortNewest(){
+        transactionList.sort((transaction1, transaction2) -> transaction2.getRecordedDateTime().compareTo(transaction1.getRecordedDateTime()));
     }
 
     public void ledger() {
@@ -137,7 +144,7 @@ information and save it to the csv file
                 System.out.println("Returning to Home Page");
                 homeScreen();
             default:
-                System.out.println("Please try again - ledger");
+                System.out.println("Please try again");
                 ledger();
         }
     }
@@ -214,14 +221,13 @@ o H) Home - go back to the home page
                 case 0:
                     ledger();
                 case 1:
-                    System.out.println("working on displayMonthToDate method");
                     displayMonthToDate();
                     break;
                 case 2:
-                    System.out.println("working on displayPreviousMonth method");
+                    displayPreviousMonth();
                     break;
                 case 3:
-                    System.out.println("working on displayYearToDate method");
+                    displayYearToDate();
                     break;
                 case 4:
                     System.out.println("working on displayPreviousYear method");
@@ -245,10 +251,10 @@ o H) Home - go back to the home page
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
         String formatToThisDate = toThisDate.format(dateFormatter);
-        String formatThisMonth = thisMonth.format(dateFormatter);
+        String formatBeginningThisMonth = thisMonth.format(dateFormatter);
 
         System.out.println("Printing All Payments Information...");
-        System.out.println("From " + formatThisMonth + " to " + formatToThisDate);
+        System.out.println("From " + formatBeginningThisMonth + " to " + formatToThisDate);
         System.out.println();
         for (Transaction transaction : transactionList) {                                                           //for-each loop to iterate through
             if((transaction.getRecordedDate().isAfter(thisMonth) && (transaction.getRecordedDate().isBefore(toThisDate))  ) ){
@@ -259,8 +265,53 @@ o H) Home - go back to the home page
 
             }
         }
+        reports();
+    }
 
+    public void displayPreviousMonth(){
+        LocalDate beginningLastMonth = LocalDate.now().minusMonths(1).withDayOfMonth(1);
+        LocalDate endLastMonth = LocalDate.now().minusMonths(1).withDayOfMonth(LocalDate.MAX.getDayOfMonth());
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+        String formatBeginningLastMonth = beginningLastMonth.format(dateFormatter);
+        String formatEndLastMonth = endLastMonth.format(dateFormatter);
 
+        System.out.println("Printing All Payments Information...");
+        System.out.println("From " + formatBeginningLastMonth + " to " + formatEndLastMonth);
+        System.out.println();
+        for (Transaction transaction : transactionList) {                                                           //for-each loop to iterate through
+            if((transaction.getRecordedDate().isAfter(beginningLastMonth) && (transaction.getRecordedDate().isBefore(endLastMonth))  ) ){
+
+                String formatDate = transaction.getRecordedDate().format(dateFormatter);
+                String formatTime = transaction.getRecordedTime().format(timeFormatter);
+                System.out.printf("Date and Time: %s : %s |\t Description: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+
+            }
+        }
+        reports();
+    }
+
+    public void displayYearToDate(){
+        LocalDate toThisDate = LocalDate.now();
+        LocalDate thisYear = LocalDate.now().withMonth(1).withDayOfMonth(1);
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+        String formatToThisDate = toThisDate.format(dateFormatter);
+        String formatBeginningThisYear = thisYear.format(dateFormatter);
+
+        System.out.println("Printing All Payments Information...");
+        System.out.println("From " + formatBeginningThisYear + " to " + formatToThisDate);
+        System.out.println();
+        for (Transaction transaction : transactionList) {                                                           //for-each loop to iterate through
+            if((transaction.getRecordedDate().isAfter(thisYear) && (transaction.getRecordedDate().isBefore(toThisDate))  ) ){
+
+                String formatDate = transaction.getRecordedDate().format(dateFormatter);
+                String formatTime = transaction.getRecordedTime().format(timeFormatter);
+                System.out.printf("Date and Time: %s : %s |\t Description: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+
+            }
+        }
+        reports();
     }
 
 
