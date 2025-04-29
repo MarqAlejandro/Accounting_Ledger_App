@@ -154,10 +154,9 @@ reports or to run a custom search
                 System.out.println("working on displayDepositsOnly method");
                 break;
             case 3:
-                System.out.println("working on ledger method");
+                System.out.println("working on displayPaymentsOnly method");
                 break;
             case 4:
-                System.out.println("working on reports method");
                 reports();
                 break;
             case 5:
