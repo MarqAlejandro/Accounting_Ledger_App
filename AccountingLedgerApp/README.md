@@ -4,7 +4,8 @@
 
 ### Description
 --------------------------------
-description for the project
+The account ledger application is a 3-tiered user interface that implements a .csv file as a means of saving account information. 
+It will prompt the user for input from a keyboard in order to traverse through each layer. 
 
 ### Features
 --------------------------------
