@@ -1,12 +1,17 @@
 package com.plurasight;
 
-import java.time.*;
+import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 
 public class AccountLedger {
     /*
-                      Home Screen
 
 § D) Add Deposit - prompt user for the deposit information and
 save it to the csv file
@@ -15,74 +20,91 @@ save it to the csv file
 information and save it to the csv file
 
 § L) Ledger - display the ledger screen
-
-§ X) Exit - exit the application
-
      */
     private Scanner scanner = new Scanner(System.in);
+    private List<Transaction> transactionList = new ArrayList<>();
+
 
     public void homeScreen(){
+        loadTransactionInfo();
 
-        System.out.println("D) Add Deposit" +
-                "\nP) Make Payment (Debit)" +
-                "\nL) Ledger" +
-                "\nX) Exit");
+        System.out.println("\nWelcome, please input one of the following: " +
+                "\n\tD) Add Deposit" +
+                "\n\tP) Make Payment (Debit)" +
+                "\n\tL) Ledger" +
+                "\n\tX) Exit");
         
-        int userInputConverted = 0;
+        int userInputHome = 0;
         String userInput = scanner.nextLine();
         if(userInput.equalsIgnoreCase("d")){
-            userInputConverted = 1;
+            userInputHome = 1;
         }
         else if (userInput.equalsIgnoreCase("p")){
-            userInputConverted = 2;
+            userInputHome = 2;
         }
         else if (userInput.equalsIgnoreCase("l")){
-            userInputConverted = 3;
+            userInputHome = 3;
         } else if (userInput.equalsIgnoreCase("x")) {
-            userInputConverted = 4;
+            userInputHome = 4;
         }
         else{
             System.out.println("user input was not one of the options");
         }
         
-        switch (userInputConverted){
+        switch (userInputHome){
             case 1:
                 System.out.println("working on addDeposit method");
+
                 break;
             case 2:
                 System.out.println("working on makePayment method");
                 break;
             case 3:
-                System.out.println("working on ledger method");
+                ledger();
                 break;
             case 4:
-                System.out.println("Exiting the application, please come again");
+                exit();
                 break;
             default:
-                System.out.println("Please try again");
+                System.out.println("Please try again - home screen");
                 homeScreen();
         }
+    }//end of homeScreen method
 
+    public void loadTransactionInfo(){                                                                          //method to load Transaction info from .csv file onto ArrayList
 
+             try {
+                 System.out.println("Loading Account Information");
+
+                 BufferedReader bufReader = new BufferedReader(new FileReader("transactions.csv"));     //BufferedReader variable that takes a FileReader as arguement that takes a .csv file arguement
+                 String FileInput;                                                                   //String Variable to hold transaction info
+
+                 bufReader.readLine();                                                                       //skip the first line, assumes that the first line is headers and garbage data
+
+                 while ((FileInput = bufReader.readLine()) != null) {                                //in the midst of while loop read a line from .csv file and load it onto String Variable and check if it comes out null
+                     String[] tokens = FileInput.split(Pattern.quote("|"));                   //load the line onto a String array so that it can be partitioned by the pattern "|"
+                     Transaction transaction = new Transaction();                                                 //create an empty Transaction object
+                     if(tokens.length == 5) {
+                         transaction.setRecordedDate(LocalDate.parse(tokens[0]));
+                         transaction.setRecordedTime(LocalTime.parse(tokens[1]));
+                         transaction.setDescription(tokens[2]);
+                         transaction.setVendor(tokens[3]);
+                         transaction.setAmount(Double.parseDouble(tokens[4]))                                  ;//will load and set all transaction information only if there is exactly 5 elements in the String Array
+                     }
+                     else{
+                         System.out.println("error: missing or too much information on a given transaction");
+                     }
+                     transactionList.add(transaction);                                                         //load the Employee object onto the ArrayList for Employee
+                 }
+                 bufReader.close();                                                                          //bufferedReader close
+
+             } catch (IOException e) {                                                                       //in case of an error with I/O
+                    System.out.println("error with .csv file naming, please check if its the correct save file");                              //catch to loop back to beginning
+
+             }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     /*
+         /*
 
 in-depth detail on Ledger menu
  Ledger - All entries should show the newest entries first
@@ -94,7 +116,62 @@ o P) Payments - Display only the negative entries (or payments)
 o R) Reports - A new screen that allows the user to run pre-defined
 reports or to run a custom search
 
-in-depth reports
+          */
+
+    public void ledger(){
+        System.out.println("\nLedger Display Screen, please input one of the following: " +
+                "\n\tA) All entries" +
+                "\n\tD) Deposits" +
+                "\n\tP) Payments" +
+                "\n\tR) Reports" +
+                "\n\tH) Home");
+
+        int userInputLedger = 0;
+        String userInput = scanner.nextLine();
+        if(userInput.equalsIgnoreCase("a")){
+            userInputLedger = 1;
+        }
+        else if (userInput.equalsIgnoreCase("d")){
+            userInputLedger = 2;
+        }
+        else if (userInput.equalsIgnoreCase("p")){
+            userInputLedger = 3;
+        } else if (userInput.equalsIgnoreCase("r")) {
+            userInputLedger = 4;
+        }
+        else if (userInput.equalsIgnoreCase("h")){
+            userInputLedger = 5;
+        }
+        else{
+            System.out.println("user input was not one of the options");
+        }
+
+        switch (userInputLedger){
+            case 1:
+                System.out.println("working on displayAll method");
+                break;
+            case 2:
+                System.out.println("working on displayDepositsOnly method");
+                break;
+            case 3:
+                System.out.println("working on ledger method");
+                break;
+            case 4:
+                System.out.println("working on reports method");
+                reports();
+                break;
+            case 5:
+                System.out.println("Returning to Home Page");
+                homeScreen();
+            default:
+                System.out.println("Please try again - ledger");
+                ledger();
+        }
+    }
+
+     /*
+
+in-depth reports screen
 § 1) Month To Date
 § 2) Previous Month
 § 3) Year To Date
@@ -104,4 +181,49 @@ and display all entries for that vendor
 § 0) Back - go back to the report page
 o H) Home - go back to the home page
      */
+
+    public void reports(){
+        System.out.println("\nReports Display Screen, please input one of the following: " +
+                "\n\t1) Month To Date" +
+                "\n\t2) Previous Month" +
+                "\n\t3) Year To Date" +
+                "\n\t4) Previous Year" +
+                "\n\t5) Search by Vendor" +
+                "\n\t0) Back to ledger");
+        try{
+        int userInputReport = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (userInputReport) {
+            case 0:
+                ledger();
+            case 1:
+                System.out.println("working on displayMonthToDate method");
+                break;
+            case 2:
+                System.out.println("working on displayPreviousMonth method");
+                break;
+            case 3:
+                System.out.println("working on displayYearToDate method");
+                break;
+            case 4:
+                System.out.println("working on displayPreviousYear method");
+                break;
+            case 5:
+                System.out.println("working on searchByVendor method");
+            default:
+                System.out.println("Input was not one of the options. Please try again");
+                reports();
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("A non-number was inputted please try again");
+            String eater = scanner.nextLine();
+            reports();
+        }
+    }
+
+    public void exit(){
+        System.out.println("Exiting the application, please come again");
+        System.exit(0);
+    }
 }
