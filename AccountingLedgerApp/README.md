@@ -22,6 +22,10 @@ list of features:
 these 2 screenshots show the results of the 3-tier menus working intandem
 ![MenuTesting1](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img.png)
 ![MenuTesting1End](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img_1.png)
+---------------------------------
+
+this screenshot shows the results after getting all of the ledger display methods working
+![DisplayLedgerTesting](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img_2.png)
 
 
 ### My Favorite Block of Code
