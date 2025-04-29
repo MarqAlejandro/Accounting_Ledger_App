@@ -20,6 +20,7 @@ list of features:
 ### Screenshots of Output
 ---------------------------------
 ![MenuTesting1](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img.png)
+![MenuTesting1End](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img_1.png)
 
 
 ### My Favorite Block of Code
