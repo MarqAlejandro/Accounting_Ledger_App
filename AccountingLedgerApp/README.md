@@ -28,6 +28,9 @@ these 2 screenshots show the results of the 3-tier menus working intandem
 ### this screenshot shows the results after getting all of the ledger display methods working
 ![DisplayLedgerTesting](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img_2.png)
 
+### this screenshot shows the results after getting 3 of 4 of the report display methods working
+![DisplayReportsTesting](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img_3.png)
+
 
 ### My Favorite Block of Code
 ---------------------------------
