@@ -19,6 +19,7 @@ list of features:
 
 ### Screenshots of Output
 ---------------------------------
+these 2 screenshots show the results of the 3-tier menus working intandem
 ![MenuTesting1](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img.png)
 ![MenuTesting1End](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img_1.png)
 
