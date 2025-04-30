@@ -10,7 +10,7 @@ It will prompt the user for input from a keyboard in order to traverse through e
 ### Features
 --------------------------------
 
-list of features:
+list of features + Tiers of coding:
   1. ***Home Screen*** - main control method- leads to other methods depending on input
   2. -***Add Deposit & Make Payment*** - 2 methods that will add info to an ArrayList and save it to a .csv file
   3. -***Ledger Screen*** - 2nd control method - leads to 4 display methods that show different info, depends on input
@@ -30,6 +30,9 @@ these 2 screenshots show the results of the 3-tier menus working intandem
 
 ### this screenshot shows the results after getting 3 of 4 of the report display methods working
 ![DisplayReportsTesting](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img_3.png)
+
+### this screenshot shows the results after completing the 4th report display method and the searchByVendor method + a SortingByNewest method
+![DisplayReportsTesting+SearchTesting](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img_4.png)
 
 
 ### My Favorite Block of Code
