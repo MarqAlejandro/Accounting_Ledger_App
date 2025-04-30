@@ -6,6 +6,7 @@
 --------------------------------
 The account ledger application is a 3-tiered user interface that implements a .csv file as a means of saving account information. 
 It will prompt the user for input from a keyboard in order to traverse through each layer. 
+Specific options will prompt the user for information required to either add an entry or to search for an entry
 
 ### Features
 --------------------------------
@@ -15,7 +16,8 @@ list of features + Tiers of coding:
   2. -***Add Deposit & Make Payment*** - 2 methods that will add info to an ArrayList and save it to a .csv file
   3. -***Ledger Screen*** - 2nd control method - leads to 4 display methods that show different info, depends on input
   4.    --***Reports Screen*** - 3rd control method - leads to 5 options to display different info based on specified dates and time
-  5. ***Back, Home, & Exit*** - Navigation buttons that will bring us back a level higher or out of the application
+  5.    --***Search By Vendor*** - method tha will prompt the user for a vendor's information and will print all entries that are relatively close to it
+  6. ***Back, Home, & Exit*** - Navigation buttons that will bring us back a level higher or out of the application
 
 ### Screenshots of Output
 ---------------------------------
