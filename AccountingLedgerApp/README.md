@@ -34,6 +34,10 @@ these 2 screenshots show the results of the 3-tier menus working intandem
 ### this screenshot shows the results after completing the 4th report display method and the searchByVendor method + a SortingByNewest method
 ![DisplayReportsTesting+SearchTesting](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img_4.png)
 
+### this screenshot shows the results after completing addDeposit and makePayment methods
+
+### this screenshot shows that the previous 2 methods (addDeposit and makePayment) were successfully added to the ArrayList and the .csv file
+
 
 ### My Favorite Block of Code
 ---------------------------------
