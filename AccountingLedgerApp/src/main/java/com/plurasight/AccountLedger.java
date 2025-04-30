@@ -29,11 +29,12 @@ information and save it to the csv file
         loadTransactionInfo();
         sortNewest();
 
-        System.out.println("\nWelcome, please input one of the following: " +
+        System.out.print("\nWelcome, please input one of the following: " +
                 "\n\tD) Add Deposit" +
                 "\n\tP) Make Payment (Debit)" +
                 "\n\tL) Ledger" +
-                "\n\tX) Exit");
+                "\n\tX) Exit" +
+                "\nEnter: ");
 
         int userInputHome = 0;
         String userInput = scanner.nextLine();
@@ -72,7 +73,7 @@ information and save it to the csv file
     public void loadTransactionInfo() {                                                                          //method to load Transaction info from .csv file onto ArrayList
 
         try {
-            System.out.println("Loading Account Information");
+            //System.out.println("Loading Account Information");
 
             BufferedReader bufReader = new BufferedReader(new FileReader("transactions.csv"));     //BufferedReader variable that takes a FileReader as arguement that takes a .csv file arguement
             String FileInput;                                                                   //String Variable to hold transaction info
@@ -108,12 +109,13 @@ information and save it to the csv file
     }
 
     public void ledger() {
-        System.out.println("\nLedger Display Screen, please input one of the following: " +
+        System.out.print("\nLedger Display Screen, please input one of the following: " +
                 "\n\tA) All entries" +
                 "\n\tD) Deposits" +
                 "\n\tP) Payments" +
                 "\n\tR) Reports" +
-                "\n\tH) Home");
+                "\n\tH) Home" +
+                "\nEnter: ");
 
         int userInputLedger = 0;
         String userInput = scanner.nextLine();
@@ -141,7 +143,7 @@ information and save it to the csv file
             case 4:
                 reports();
             case 5:
-                System.out.println("Returning to Home Page");
+                System.out.println("Returning to Home Page...");
                 homeScreen();
             default:
                 System.out.println("Please try again");
@@ -159,6 +161,7 @@ information and save it to the csv file
             String formatTime = transaction.getRecordedTime().format(timeFormatter);
             System.out.printf("Date and Time: %s : %s |\t Descripton: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
         }
+        System.out.println("\nReturning to Ledger Display Screen...");
         ledger();
     }
 
@@ -174,6 +177,7 @@ information and save it to the csv file
                 System.out.printf("Date and Time: %s : %s |\t Descripton: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
             }
         }
+        System.out.println("\nReturning to Ledger Display Screen...");
         ledger();
     }
 
@@ -189,30 +193,28 @@ information and save it to the csv file
                 System.out.printf("Date and Time: %s : %s |\t Description: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
             }
         }
+        System.out.println("Returning to Ledger Display Screen...");
         ledger();
     }
 
      /*
 
 in-depth reports screen
-§ 1) Month To Date
-§ 2) Previous Month
-§ 3) Year To Date
-§ 4) Previous Year
+
 § 5) Search by Vendor - prompt the user for the vendor name
 and display all entries for that vendor
-§ 0) Back - go back to the report page
-o H) Home - go back to the home page
+
      */
 
     public void reports() {
-        System.out.println("\nReports Display Screen, please input one of the following: " +
+        System.out.print("\nReports Display Screen, please input one of the following: " +
                 "\n\t1) Month To Date" +
                 "\n\t2) Previous Month" +
                 "\n\t3) Year To Date" +
                 "\n\t4) Previous Year" +
                 "\n\t5) Search by Vendor" +
-                "\n\t0) Back to ledger");
+                "\n\t0) Back to ledger" +
+                "\nEnter: ");
         try {
             int userInputReport = scanner.nextInt();
             scanner.nextLine();
@@ -230,10 +232,11 @@ o H) Home - go back to the home page
                     displayYearToDate();
                     break;
                 case 4:
-                    System.out.println("working on displayPreviousYear method");
+                    displayPreviousYear();
                     break;
                 case 5:
                     System.out.println("working on searchByVendor method");
+                    searchByVendor();
                 default:
                     System.out.println("Input was not one of the options. Please try again");
                     reports();
@@ -265,6 +268,7 @@ o H) Home - go back to the home page
 
             }
         }
+        System.out.println("Returning to Reports Display Screen...");
         reports();
     }
 
@@ -288,6 +292,7 @@ o H) Home - go back to the home page
 
             }
         }
+        System.out.println("Returning to Reports Display Screen...");
         reports();
     }
 
@@ -311,11 +316,58 @@ o H) Home - go back to the home page
 
             }
         }
+        System.out.println("Returning to Reports Display Screen...");
         reports();
     }
 
+    public void displayPreviousYear(){
+        LocalDate beginningLastYear = LocalDate.now().minusYears(1).withMonth(1).withDayOfMonth(1);
+        LocalDate endLastYear = LocalDate.now().minusYears(1).withMonth(12).withDayOfMonth(LocalDate.MAX.getDayOfMonth());
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+        String formatBeginningLastYear = beginningLastYear.format(dateFormatter);
+        String formatEndLastYear = endLastYear.format(dateFormatter);
 
+        System.out.println("Printing All Payments Information...");
+        System.out.println("From " + formatBeginningLastYear + " to " + formatEndLastYear);
+        System.out.println();
+        for (Transaction transaction : transactionList) {                                                           //for-each loop to iterate through
+            if((transaction.getRecordedDate().isAfter(beginningLastYear) && (transaction.getRecordedDate().isBefore(endLastYear))  ) ){
 
+                String formatDate = transaction.getRecordedDate().format(dateFormatter);
+                String formatTime = transaction.getRecordedTime().format(timeFormatter);
+                System.out.printf("Date and Time: %s : %s |\t Description: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+
+            }
+        }
+        System.out.println("Returning to Reports Display Screen...");
+        reports();
+    }
+
+    public void searchByVendor(){
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+        System.out.print("Enter a Vendor:");
+        String userInputVendor = scanner.nextLine().toLowerCase();
+
+        System.out.println("\nSearching...");
+        boolean isFound = false;
+        
+        for(Transaction transaction : transactionList){
+            if(transaction.getVendor().toLowerCase().contains(userInputVendor)){
+                System.out.println("Found a match!");
+                isFound = true;
+
+                String formatDate = transaction.getRecordedDate().format(dateFormatter);
+                String formatTime = transaction.getRecordedTime().format(timeFormatter);
+                System.out.printf("Date and Time: %s : %s |\t Description: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+            }
+        }
+        if(!isFound){
+            System.out.println("No Vendor has been found");
+        }
+        reports();
+    }
 
     public void exit() {
         System.out.println("Exiting the application, please come again");
