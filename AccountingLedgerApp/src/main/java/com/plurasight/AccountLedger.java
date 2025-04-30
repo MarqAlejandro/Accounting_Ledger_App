@@ -12,11 +12,7 @@ import java.util.regex.Pattern;
 
 
 public class AccountLedger {
-    /*
-§ P) Make Payment (Debit) - prompt user for the debit
-information and save it to the csv file
 
-     */
     private Scanner scanner = new Scanner(System.in);
     private List<Transaction> transactionList = new ArrayList<>();
 
@@ -57,16 +53,14 @@ information and save it to the csv file
         switch (userInputHome) {
             case 1:
                 addDeposit();
-                break;
             case 2:
                 System.out.println("working on makePayment method");
+                makePayment();
                 break;
             case 3:
                 ledger();
-                break;
             case 4:
                 exit();
-                break;
             default:
                 System.out.println("Please try again");
                 homeScreen();
@@ -97,10 +91,45 @@ information and save it to the csv file
         writer.close();
 
         homeScreen();
+
         } catch (InputMismatchException eInput) {
             System.out.println("Amount input was non-numeric, please try again");
             scanner.nextLine();
             addDeposit();
+        } catch (IOException eIO) {
+            System.out.println("error with .csv file naming, please check if its the correct save file");
+        }
+    }
+
+    public void makePayment() {
+        try {
+            System.out.print("Enter Transaction Description: ");
+            String transactionDescription = scanner.nextLine();
+            System.out.print("Enter Transaction Vendor: ");
+            String transactionVendor = scanner.nextLine();
+            System.out.print("Enter Transaction Amount: ");
+            double transactionAmount = scanner.nextDouble();
+            scanner.nextLine();
+
+            Transaction transaction = new Transaction(transactionDescription, transactionVendor, transactionAmount);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss");
+            LocalTime formatTime = LocalTime.parse(transaction.getRecordedTime().format(formatter));
+
+
+            FileWriter writer = new FileWriter("transactions.csv",true);
+
+
+            writer.write(transaction.getRecordedDate() + "|" + formatTime + "|" + transaction.getDescription() + "|" + transaction.getVendor() + "|" + -transaction.getAmount());
+            writer.write("\n");
+            writer.close();
+
+            homeScreen();
+
+        } catch (InputMismatchException eInput) {
+            System.out.println("Amount input was non-numeric, please try again");
+            scanner.nextLine();
+            makePayment();
         } catch (IOException eIO) {
             System.out.println("error with .csv file naming, please check if its the correct save file");
         }
