@@ -197,15 +197,6 @@ information and save it to the csv file
         ledger();
     }
 
-     /*
-
-in-depth reports screen
-
-§ 5) Search by Vendor - prompt the user for the vendor name
-and display all entries for that vendor
-
-     */
-
     public void reports() {
         System.out.print("\nReports Display Screen, please input one of the following: " +
                 "\n\t1) Month To Date" +
@@ -235,7 +226,6 @@ and display all entries for that vendor
                     displayPreviousYear();
                     break;
                 case 5:
-                    System.out.println("working on searchByVendor method");
                     searchByVendor();
                 default:
                     System.out.println("Input was not one of the options. Please try again");
@@ -352,7 +342,7 @@ and display all entries for that vendor
 
         System.out.println("\nSearching...");
         boolean isFound = false;
-        
+
         for(Transaction transaction : transactionList){
             if(transaction.getVendor().toLowerCase().contains(userInputVendor)){
                 System.out.println("Found a match!");
