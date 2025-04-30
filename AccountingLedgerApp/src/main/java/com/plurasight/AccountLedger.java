@@ -54,9 +54,7 @@ public class AccountLedger {
             case 1:
                 addDeposit();
             case 2:
-                System.out.println("working on makePayment method");
                 makePayment();
-                break;
             case 3:
                 ledger();
             case 4:
