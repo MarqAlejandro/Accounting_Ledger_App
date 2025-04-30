@@ -13,9 +13,6 @@ import java.util.regex.Pattern;
 
 public class AccountLedger {
     /*
-§ D) Add Deposit - prompt user for the deposit information and
-save it to the csv file
-
 § P) Make Payment (Debit) - prompt user for the debit
 information and save it to the csv file
 
@@ -29,12 +26,19 @@ information and save it to the csv file
         loadTransactionInfo();
         sortNewest();
 
-        System.out.print("\nWelcome, please input one of the following: " +
-                "\n\tD) Add Deposit" +
-                "\n\tP) Make Payment (Debit)" +
-                "\n\tL) Ledger" +
-                "\n\tX) Exit" +
-                "\nEnter: ");
+        System.out.print("""
+                
+                Welcome, please input one of the following: \
+                
+                \tD) Add Deposit\
+                
+                \tP) Make Payment (Debit)\
+                
+                \tL) Ledger\
+                
+                \tX) Exit\
+                
+                Enter:\s""");
 
         int userInputHome = 0;
         String userInput = scanner.nextLine();
@@ -52,8 +56,7 @@ information and save it to the csv file
 
         switch (userInputHome) {
             case 1:
-                System.out.println("working on addDeposit method");
-
+                addDeposit();
                 break;
             case 2:
                 System.out.println("working on makePayment method");
@@ -69,6 +72,39 @@ information and save it to the csv file
                 homeScreen();
         }
     }//end of homeScreen method
+
+    public void addDeposit() {
+        try {
+        System.out.print("Enter Transaction Description: ");
+        String transactionDescription = scanner.nextLine();
+        System.out.print("Enter Transaction Vendor: ");
+        String transactionVendor = scanner.nextLine();
+        System.out.print("Enter Transaction Amount: ");
+        double transactionAmount = scanner.nextDouble();
+        scanner.nextLine();
+
+        Transaction transaction = new Transaction(transactionDescription, transactionVendor, transactionAmount);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss");
+        LocalTime formatTime = LocalTime.parse(transaction.getRecordedTime().format(formatter));
+
+
+        FileWriter writer = new FileWriter("transactions.csv",true);
+
+
+        writer.write(transaction.getRecordedDate() + "|" + formatTime + "|" + transaction.getDescription() + "|" + transaction.getVendor() + "|" + transaction.getAmount());
+        writer.write("\n");
+        writer.close();
+
+        homeScreen();
+        } catch (InputMismatchException eInput) {
+            System.out.println("Amount input was non-numeric, please try again");
+            scanner.nextLine();
+            addDeposit();
+        } catch (IOException eIO) {
+            System.out.println("error with .csv file naming, please check if its the correct save file");
+        }
+    }
 
     public void loadTransactionInfo() {                                                                          //method to load Transaction info from .csv file onto ArrayList
 
@@ -97,8 +133,7 @@ information and save it to the csv file
             }
             bufReader.close();                                                                          //bufferedReader close
 
-        } catch (
-                IOException e) {                                                                       //in case of an error with I/O
+        } catch (IOException e) {                                                                       //in case of an error with I/O
             System.out.println("error with .csv file naming, please check if its the correct save file");                              //catch to loop back to beginning
 
         }
@@ -109,13 +144,21 @@ information and save it to the csv file
     }
 
     public void ledger() {
-        System.out.print("\nLedger Display Screen, please input one of the following: " +
-                "\n\tA) All entries" +
-                "\n\tD) Deposits" +
-                "\n\tP) Payments" +
-                "\n\tR) Reports" +
-                "\n\tH) Home" +
-                "\nEnter: ");
+        System.out.print("""
+                
+                Ledger Display Screen, please input one of the following: \
+                
+                \tA) All entries\
+                
+                \tD) Deposits\
+                
+                \tP) Payments\
+                
+                \tR) Reports\
+                
+                \tH) Home\
+                
+                Enter:\s""");
 
         int userInputLedger = 0;
         String userInput = scanner.nextLine();
@@ -198,14 +241,23 @@ information and save it to the csv file
     }
 
     public void reports() {
-        System.out.print("\nReports Display Screen, please input one of the following: " +
-                "\n\t1) Month To Date" +
-                "\n\t2) Previous Month" +
-                "\n\t3) Year To Date" +
-                "\n\t4) Previous Year" +
-                "\n\t5) Search by Vendor" +
-                "\n\t0) Back to ledger" +
-                "\nEnter: ");
+        System.out.print("""
+                
+                Reports Display Screen, please input one of the following: \
+                
+                \t1) Month To Date\
+                
+                \t2) Previous Month\
+                
+                \t3) Year To Date\
+                
+                \t4) Previous Year\
+                
+                \t5) Search by Vendor\
+                
+                \t0) Back to ledger\
+                
+                Enter:\s""");
         try {
             int userInputReport = scanner.nextInt();
             scanner.nextLine();
