@@ -23,7 +23,7 @@ public class Transaction {
 
         }
 
-        //constructor with parameters
+        //constructor with parameters made just in case there was a transaction that needs to be hardcoded into the .csv file
         public Transaction(LocalDate recordedDate, LocalTime recordedTime, LocalDateTime recordedDateTime, String description, String vendor, Double amount) {
             this.recordedDate = recordedDate;
             this.recordedTime = recordedTime;
@@ -33,7 +33,7 @@ public class Transaction {
             this.amount = amount;
         }
 
-        public Transaction(String description, String user, double amount){                         //3rd constructor
+        public Transaction(String description, String user, double amount){                         //3rd constructor used in addDeposit and makePayment
             this.recordedDate = LocalDate.now();
             this.recordedTime = LocalTime.now();
             this.recordedDateTime = LocalDateTime.now();
