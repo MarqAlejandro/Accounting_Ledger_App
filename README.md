@@ -42,7 +42,7 @@ these 2 screenshots show the results of the 3-tier menus working intandem
 ### this screenshot shows that the previous 2 methods (addDeposit and makePayment) were successfully added to the ArrayList and the .csv file
 ![ArrayList&.csvFileResults](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img_6.png)
 
-### My Favorite Block of Code
+### My Favorite Block(s) of Code
 ---------------------------------
 
 my favorite block of code is the sort method. Initially, when trying to implement it I found it difficult to try to use just LocalDate or just LocalTime alone,
@@ -51,5 +51,13 @@ The solution I came up with was to make LocalDateTime apart of the constructor, 
 append them to a String with the exact format of a LocalDateTime object and parse it into a LocalDateTime object. 
 Also, notice that the setter is being called at line 155 after all the other setters have done there job, 
 thus making it viable for the LocalDate and LocalTime getters to pass as arguements for the LocalDateTime setter.
+This was intentional by design.
 
 ![SortMethod](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img_7.png)
+
+Another favorite of mine was my implementation of recursion into all the menus, which drastically reduced the need for while loops and booleans in my code.
+***In general*** At the end of each method, I made it so that its calling on others or calling itself if the input doesn't align with what was prompted.
+The menus specifically links up with other menus, calls other functional methods, or (like I've stated previously) calls itself, effectively imitating a while loop.
+The only means of escaping the code is by pressing the exit option in the home screen, which will execute the System.exit(0) protocol. 
+
+![Menu](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img_8.png)
