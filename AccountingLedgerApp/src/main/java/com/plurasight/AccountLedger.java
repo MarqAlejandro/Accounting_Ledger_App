@@ -71,7 +71,7 @@ public class AccountLedger {
         String transactionDescription = scanner.nextLine();
         System.out.print("Enter Transaction Vendor: ");
         String transactionVendor = scanner.nextLine();
-        System.out.print("Enter Transaction Amount: ");
+        System.out.print("Enter Amount Added to the Account: ");
         double transactionAmount = scanner.nextDouble();
         scanner.nextLine();
 
@@ -83,9 +83,10 @@ public class AccountLedger {
 
         FileWriter writer = new FileWriter("transactions.csv",true);                            //append has be set to on, so it will add to the bottom of the file
 
-
         writer.write(transaction.getRecordedDate() + "|" + formatTime + "|" + transaction.getDescription() + "|" + transaction.getVendor() + "|" + transaction.getAmount());
         writer.write("\n");
+
+
         writer.close();
 
         homeScreen();                                                                                               //return to homeScreen
@@ -103,9 +104,9 @@ public class AccountLedger {
         try {
             System.out.print("Enter Transaction Description: ");
             String transactionDescription = scanner.nextLine();
-            System.out.print("Enter Transaction Vendor: ");
+            System.out.print("Enter Transaction Recipient: ");
             String transactionVendor = scanner.nextLine();
-            System.out.print("Enter Transaction Amount: ");
+            System.out.print("Enter Amount Paying out of the Account: -");
             double transactionAmount = scanner.nextDouble();
             scanner.nextLine();
 
