@@ -3,6 +3,7 @@ package com.plurasight;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Transaction {
 
@@ -12,6 +13,8 @@ public class Transaction {
         private String vendor;
         private Double amount;
         private LocalDateTime recordedDateTime;
+        private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
 
         public Transaction(){                                                   //empty constructor
             this.recordedDate = LocalDate.now();
@@ -40,6 +43,12 @@ public class Transaction {
             this.description = description;
             this.vendor = user;
             this.amount = amount;
+        }
+
+        public void displayInformation(){
+            String formatDate = getRecordedDate().format(dateFormatter);
+            String formatTime = getRecordedTime().format(timeFormatter);
+            System.out.printf("Date and Time: %s : %s |\t Descripton: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, getDescription(), getVendor(), getAmount());
         }
 
                                                                                                         //list of getters and setters for each private variable

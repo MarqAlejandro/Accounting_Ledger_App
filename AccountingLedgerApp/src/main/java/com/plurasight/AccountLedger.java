@@ -222,29 +222,24 @@ public class AccountLedger {
     }
 
     public void displayAll() {                                                                  //display all entries
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
         System.out.println("Printing All Account Transaction Information:");
         System.out.println();
-        for (Transaction transaction : transactionList) {                                                           //for-each loop to iterate through
-            String formatDate = transaction.getRecordedDate().format(dateFormatter);
-            String formatTime = transaction.getRecordedTime().format(timeFormatter);
-            System.out.printf("Date and Time: %s : %s |\t Descripton: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+        for (Transaction transaction : transactionList) {
+
+            transaction.displayInformation();
         }
         System.out.println("\nReturning to Ledger Display Screen...");
         ledger();
     }
 
     public void displayDepositOnly(){                                                       //display only deposits aka positive amount values
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+
         System.out.println("Printing All Deposits Information:");
         System.out.println();
         for (Transaction transaction : transactionList) {
             if(transaction.getAmount() > 0) {
-                String formatDate = transaction.getRecordedDate().format(dateFormatter);
-                String formatTime = transaction.getRecordedTime().format(timeFormatter);
-                System.out.printf("Date and Time: %s : %s |\t Descripton: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+
+                transaction.displayInformation();
             }
         }
         System.out.println("\nReturning to Ledger Display Screen...");
@@ -252,15 +247,13 @@ public class AccountLedger {
     }
 
     public void displayPaymentsOnly(){                                                                  //display only payments aka negative amount values
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+
         System.out.println("Printing All Payments Information:");
         System.out.println();
         for (Transaction transaction : transactionList) {
             if(transaction.getAmount() < 0) {
-                String formatDate = transaction.getRecordedDate().format(dateFormatter);
-                String formatTime = transaction.getRecordedTime().format(timeFormatter);
-                System.out.printf("Date and Time: %s : %s |\t Description: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+
+                transaction.displayInformation();
             }
         }
         System.out.println("Returning to Ledger Display Screen...");
@@ -317,7 +310,6 @@ public class AccountLedger {
         LocalDate toThisDate = LocalDate.now();
         LocalDate thisMonth = LocalDate.now().withDayOfMonth(1);
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
         String formatToThisDate = toThisDate.format(dateFormatter);
         String formatBeginningThisMonth = thisMonth.format(dateFormatter);
 
@@ -327,9 +319,7 @@ public class AccountLedger {
         for (Transaction transaction : transactionList) {                                                           //for-each loop to iterate through
             if((transaction.getRecordedDate().isAfter(thisMonth) && (transaction.getRecordedDate().isBefore(toThisDate))  ) ){
 
-                String formatDate = transaction.getRecordedDate().format(dateFormatter);
-                String formatTime = transaction.getRecordedTime().format(timeFormatter);
-                System.out.printf("Date and Time: %s : %s |\t Description: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                transaction.displayInformation();
 
             }
         }
@@ -341,7 +331,6 @@ public class AccountLedger {
         LocalDate beginningLastMonth = LocalDate.now().minusMonths(1).withDayOfMonth(1);
         LocalDate endLastMonth = LocalDate.now().minusMonths(1).withDayOfMonth(LocalDate.MAX.getDayOfMonth());
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
         String formatBeginningLastMonth = beginningLastMonth.format(dateFormatter);
         String formatEndLastMonth = endLastMonth.format(dateFormatter);
 
@@ -351,10 +340,7 @@ public class AccountLedger {
         for (Transaction transaction : transactionList) {
             if((transaction.getRecordedDate().isAfter(beginningLastMonth) && (transaction.getRecordedDate().isBefore(endLastMonth))  ) ){
 
-                String formatDate = transaction.getRecordedDate().format(dateFormatter);
-                String formatTime = transaction.getRecordedTime().format(timeFormatter);
-                System.out.printf("Date and Time: %s : %s |\t Description: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
-
+                transaction.displayInformation();
             }
         }
         System.out.println("Returning to Reports Display Screen...");
@@ -365,7 +351,6 @@ public class AccountLedger {
         LocalDate toThisDate = LocalDate.now();
         LocalDate thisYear = LocalDate.now().withMonth(1).withDayOfMonth(1);
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
         String formatToThisDate = toThisDate.format(dateFormatter);
         String formatBeginningThisYear = thisYear.format(dateFormatter);
 
@@ -375,9 +360,7 @@ public class AccountLedger {
         for (Transaction transaction : transactionList) {
             if((transaction.getRecordedDate().isAfter(thisYear) && (transaction.getRecordedDate().isBefore(toThisDate))  ) ){
 
-                String formatDate = transaction.getRecordedDate().format(dateFormatter);
-                String formatTime = transaction.getRecordedTime().format(timeFormatter);
-                System.out.printf("Date and Time: %s : %s |\t Description: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                transaction.displayInformation();
 
             }
         }
@@ -399,10 +382,7 @@ public class AccountLedger {
         for (Transaction transaction : transactionList) {
             if((transaction.getRecordedDate().isAfter(beginningLastYear) && (transaction.getRecordedDate().isBefore(endLastYear))  ) ){
 
-                String formatDate = transaction.getRecordedDate().format(dateFormatter);
-                String formatTime = transaction.getRecordedTime().format(timeFormatter);
-                System.out.printf("Date and Time: %s : %s |\t Description: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
-
+                transaction.displayInformation();
             }
         }
         System.out.println("Returning to Reports Display Screen...");
@@ -410,8 +390,6 @@ public class AccountLedger {
     }
 
     public void searchByVendor(){                                                   //prompt user for vendor name and print all entries that contain the user's input, and yes if 1 letter is inputted it will print all entries that contain that letter
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
         System.out.print("Enter a Vendor:");
         String userInputVendor = scanner.nextLine().toLowerCase();
 
@@ -423,9 +401,7 @@ public class AccountLedger {
                 System.out.println("Found a match!");
                 isFound = true;
 
-                String formatDate = transaction.getRecordedDate().format(dateFormatter);
-                String formatTime = transaction.getRecordedTime().format(timeFormatter);
-                System.out.printf("Date and Time: %s : %s |\t Description: %s |\t Vendor: %s |\t Amount: %.2f\n", formatDate, formatTime, transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                transaction.displayInformation();
             }
         }
         if(!isFound){
