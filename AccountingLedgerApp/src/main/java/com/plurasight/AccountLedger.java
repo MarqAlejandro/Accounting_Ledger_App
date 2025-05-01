@@ -317,8 +317,13 @@ public class AccountLedger {
         System.out.println("Printing All Payments Information...");
         System.out.println("From " + formatBeginningThisMonth + " to " + formatToThisDate);
         System.out.println();
-        for (Transaction transaction : transactionList) {                                                           //for-each loop to iterate through
-            if((transaction.getRecordedDate().isAfter(thisMonth) && (transaction.getRecordedDate().isBefore(toThisDate))  ) ){
+        for (Transaction transaction : transactionList) {
+            if((transaction.getRecordedDate().isAfter(thisMonth) && (transaction.getRecordedDate().isBefore(toThisDate))  ) ){      //not inclusive, if thisMonth and toThisDate are the same date
+
+                transaction.displayInformation();
+
+            }
+            if (transaction.getRecordedDate().isEqual(toThisDate)){                                                                 //in cases where the thisMonth and toThisDate are the same
 
                 transaction.displayInformation();
 
@@ -330,11 +335,10 @@ public class AccountLedger {
 
     public void displayPreviousMonth(){                                                   //display all transactions from the previous month
         LocalDate beginningLastMonth = LocalDate.now().minusMonths(1).withDayOfMonth(1);
-        LocalDate endLastMonth = LocalDate.now().minusMonths(1).withDayOfMonth(LocalDate.MAX.getDayOfMonth());
+        LocalDate endLastMonth = LocalDate.now().minusMonths(1).withDayOfMonth(LocalDate.MAX.minusMonths(1).getDayOfMonth());
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         String formatBeginningLastMonth = beginningLastMonth.format(dateFormatter);
         String formatEndLastMonth = endLastMonth.format(dateFormatter);
-
         System.out.println("Printing All Payments Information...");
         System.out.println("From " + formatBeginningLastMonth + " to " + formatEndLastMonth);
         System.out.println();
@@ -354,12 +358,16 @@ public class AccountLedger {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         String formatToThisDate = toThisDate.format(dateFormatter);
         String formatBeginningThisYear = thisYear.format(dateFormatter);
-
         System.out.println("Printing All Payments Information...");
         System.out.println("From " + formatBeginningThisYear + " to " + formatToThisDate);
         System.out.println();
         for (Transaction transaction : transactionList) {
             if((transaction.getRecordedDate().isAfter(thisYear) && (transaction.getRecordedDate().isBefore(toThisDate))  ) ){
+
+                transaction.displayInformation();
+
+            }
+            if (transaction.getRecordedDate().isEqual(toThisDate)){                                                                 //in cases where the thisYear and toThisDate are the same
 
                 transaction.displayInformation();
 
@@ -373,7 +381,6 @@ public class AccountLedger {
         LocalDate beginningLastYear = LocalDate.now().minusYears(1).withMonth(1).withDayOfMonth(1);
         LocalDate endLastYear = LocalDate.now().minusYears(1).withMonth(12).withDayOfMonth(LocalDate.MAX.getDayOfMonth());
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
         String formatBeginningLastYear = beginningLastYear.format(dateFormatter);
         String formatEndLastYear = endLastYear.format(dateFormatter);
 
