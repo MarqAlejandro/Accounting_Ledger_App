@@ -139,20 +139,20 @@ public class AccountLedger {
             //System.out.println("Loading Account Information");
 
             BufferedReader bufReader = new BufferedReader(new FileReader("transactions.csv"));     //BufferedReader variable that takes a FileReader as arguement that takes a .csv file arguement
-            String FileInput;                                                                   //String Variable to hold transaction info
+            String FileInput;                                                                               //String Variable to hold transaction info
 
-            bufReader.readLine();                                                                       //skip the first line, assumes that the first line is headers and garbage data
+            bufReader.readLine();                                                                           //skip the first line, assumes that the first line is headers and garbage data
 
-            while ((FileInput = bufReader.readLine()) != null) {                                //in the midst of while loop read a line from .csv file and load it onto String Variable and check if it comes out null
-                String[] tokens = FileInput.split(Pattern.quote("|"));                   //load the line onto a String array so that it can be partitioned by the pattern "|"
-                Transaction transaction = new Transaction();                                                 //create an empty Transaction object
+            while ((FileInput = bufReader.readLine()) != null) {                                            //in the midst of while loop read a line from .csv file and load it onto String Variable and check if it comes out null
+                String[] tokens = FileInput.split(Pattern.quote("|"));                                   //load the line onto a String array so that it can be partitioned by the pattern "|"
+                Transaction transaction = new Transaction();                                                //create an empty Transaction object
                 if (tokens.length == 5) {
                     transaction.setRecordedDate(LocalDate.parse(tokens[0]));
                     transaction.setRecordedTime(LocalTime.parse(tokens[1]));
                     transaction.setDescription(tokens[2]);
                     transaction.setVendor(tokens[3]);
                     transaction.setAmount(Double.parseDouble(tokens[4]));                                   //will load and set all transaction information only if there is exactly 5 elements in the String Array
-                    transaction.setRecordedDateTime(transaction.getRecordedDate(), transaction.getRecordedTime());              //this is required for sorting purposes
+                    transaction.setRecordedDateTime(transaction.getRecordedDate(), transaction.getRecordedTime());              //this is required for sorting purposes, overloaded a method
                 } else {
                     System.out.println("error: missing or too much information on a given transaction");
                 }

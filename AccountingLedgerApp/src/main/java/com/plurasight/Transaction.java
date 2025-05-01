@@ -42,21 +42,23 @@ public class Transaction {
             this.amount = amount;
         }
 
-    public LocalDateTime getRecordedDateTime() {
-        return recordedDateTime;
-    }
+                                                                                                        //list of getters and setters for each private variable
 
-    public void setRecordedDateTime(LocalDateTime recordedDateTime) {
-        this.recordedDateTime = recordedDateTime;
-    }
+        public LocalDateTime getRecordedDateTime() {
+            return recordedDateTime;
+        }
 
-    public void setRecordedDateTime(LocalDate recordedDate, LocalTime recordedTime){
-            String dateTimeString =  recordedDate.toString() + "T" + recordedTime;
-            this.recordedDateTime = LocalDateTime.parse(dateTimeString);
+        public void setRecordedDateTime(LocalDateTime recordedDateTime) {
+            this.recordedDateTime = recordedDateTime;
+        }
 
-    }
+        public void setRecordedDateTime(LocalDate recordedDate, LocalTime recordedTime){
+                String dateTimeString =  recordedDate.toString() + "T" + recordedTime;
+                this.recordedDateTime = LocalDateTime.parse(dateTimeString);
 
-    public LocalDate getRecordedDate() {                                //list of getters and setters for each private variable
+        }
+
+        public LocalDate getRecordedDate() {
             return recordedDate;
         }
 
