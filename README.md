@@ -44,3 +44,12 @@ these 2 screenshots show the results of the 3-tier menus working intandem
 
 ### My Favorite Block of Code
 ---------------------------------
+
+my favorite block of code is the sort method. Initially, when trying to implement it I found it difficult to try to use just LocalDate or just LocalTime alone,
+so I concluded that it'd be easier to do if I were to have the LocalDateTime. However, I had to figure out a way to get the LocalDateTime from the .csv file information. 
+The solution I came up with was to make LocalDateTime apart of the constructor, overload a setter in the Transaction class, so that it would take 2 arguements (1 LocalDate and 1 LocalTime), 
+append them to a String with the exact format of a LocalDateTime object and parse it into a LocalDateTime object. 
+Also, notice that the setter is being called at line 155 after all the other setters have done there job, 
+thus making it viable for the LocalDate and LocalTime getters to pass as arguements for the LocalDateTime setter.
+
+![SortMethod](https://github.com/MarqAlejandro/LearnToCode_Capstones/blob/main/AccountingLedgerApp/img_7.png)
